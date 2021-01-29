@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="btnPhoneMinus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="qtyPhone" type="text" class="form-control text-center" value="1">
+                           <button id="btnPhonePlus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="pricePhone">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="btnPhoneCaseMinus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="qtyPhoneCase" type="text" class="form-control text-center" value="1">
+                           <button id="btnPhoneCasePlus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span id="pricePhoneCase">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$<span id="subTotalValue">1278</span></h5>
+                        <h5>$0</h5>
+                        <h5>$<span id="totalValue">1278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <script>
+      // -------------Start Phone ------------
+      const phonePlusBtn = document.getElementById("btnPhonePlus");
+      const phoneMinusBtn = document.getElementById("btnPhoneMinus");
+
+      phonePlusBtn.addEventListener("click",function(){
+         handleProductQuantity(true,"Phone");
+      });
+
+      btnPhoneMinus.addEventListener("click",function(){
+         handleProductQuantity(false,"Phone");
+      });
+      // ----------End Phone ----------
+
+      // ------------Start Phone Case --------
+      const phoneCasePlusBtn = document.getElementById("btnPhoneCasePlus");
+      const phoneCaseMinusBtn = document.getElementById("btnPhoneCaseMinus");
+
+      phoneCasePlusBtn.addEventListener("click",function(){
+         handleProductQuantity(true,"PhoneCase");
+      });
+
+      phoneCaseMinusBtn.addEventListener("click",function(){
+         handleProductQuantity(false,"PhoneCase");
+      });
+      // -----------End Phone Case -------------
+
+      // ----------Function For Increase Quantity Phone and Phone Case and total Price-------
+      function handleProductQuantity(isIncrease,productType){
+         var productQty = parseFloat(document.getElementById("qty"+productType).value);
+         var productPrice = parseFloat(document.getElementById("price"+productType).innerText);
+         var productRate = productPrice/productQty;
+
+         if(productType == "Phone"){
+            var othersProductPrice = parseFloat(document.getElementById("pricePhoneCase").innerText);
+         }
+         if(productType == "PhoneCase"){
+            var othersProductPrice = parseFloat(document.getElementById("pricePhone").innerText);
+         }
+            
+         if(isIncrease == true){
+            document.getElementById("qty"+productType).value = ++productQty;
+         }
+         if(isIncrease == false && productQty>1){
+            document.getElementById("qty"+productType).value = --productQty;
+         }
+         
+         var totalProductPrice = productRate*productQty;
+         document.getElementById("price"+productType).innerHTML = totalProductPrice;
+         
+         document.getElementById("subTotalValue").innerHTML = totalProductPrice + othersProductPrice;
+         document.getElementById("totalValue").innerHTML = totalProductPrice + othersProductPrice;
+          // ----------Function For Increase Quantity Phone and Phone Case and total Price-------
+      }
+   </script>
+
+</body>
+
+</html>
